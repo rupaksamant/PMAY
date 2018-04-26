@@ -1,0 +1,827 @@
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
+    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ToolBar_theme"
+            android:id="@+id/tool_bar"
+            layout="@layout/tool_bar">
+        </include>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tool_bar"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/pmay_icon"
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_marginTop="-2dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/pmay_logo"
+                    android:layout_width="wrap_content"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:gravity="center"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/heading"
+                android:layout_below="@+id/pmay_icon"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/heading_scheme_title2"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textAppearance="@android:style/TextAppearance.Material.Headline" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/survey"
+                android:layout_width="match_parent"
+                android:text="@string/survey"
+                android:textSize="15dp"
+                android:layout_below="@+id/heading"
+                android:paddingLeft="0dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:layout_marginTop="5dp"
+                android:textAllCaps="false"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="bold"
+                android:textAppearance="@android:style/TextAppearance.Material.Title"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:layout_width="match_parent"
+                android:id="@+id/ulb_dropdown"
+                android:layout_below="@+id/survey"
+                android:layout_height="40dp"
+                android:entries="@array/ulb_names_array"
+                android:prompt="@string/prompt"
+                android:textSize="14dp"
+                android:spinnerMode="dropdown"
+                android:popupBackground="@color/white"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+            </android.support.v7.widget.AppCompatSpinner>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:id="@+id/ward_detail"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ulb_dropdown"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="8dp">
+                <EditText android:id="@+id/ward_detail_info"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:inputType="textPostalAddress"
+                    android:hint="Ward No." />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/slum_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:layout_below="@+id/ward_detail"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp">
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="0dp"
+                    android:id="@+id/radio_grp"
+                    android:visibility="visible"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/txt_slum"
+                        android:visibility="visible"
+                        android:id="@+id/btn_slum"
+                        android:textSize="14dp"
+                        android:paddingRight="5dp"
+                        android:checked="true"
+                        android:textColor="@color/textDarkPrimary"
+                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                        android:layout_height="wrap_content" />
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/btn_non_slum"
+                        android:layout_width="0dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:text="@string/txt_non_slum"
+                        android:visibility="visible"
+                        android:textSize="14dp"
+                        android:textColor="@color/textDarkPrimary"
+                        android:textAllCaps="false"
+                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                        android:layout_height="wrap_content" />
+                </RadioGroup>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rel_ll"
+                android:layout_below="@+id/slum_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+                        <EditText android:id="@+id/input_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:inputType="textPersonName"
+                            android:hint="Name of the Head of the family(Beneficiary Name)" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="6dp">
+                        <EditText android:id="@+id/husband_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:inputType="textPersonName"
+                            android:hint="Father's Name/Husband Name" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/photo"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="false"
+                        android:onClick="takePicture"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:fontFamily="sans-serif"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/white"
+                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                        android:text=" Applicant Photo "/>
+
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:layout_width="wrap_content"
+                        android:enabled="false"
+                        android:text="Aadhar Availability"
+                        android:id="@+id/adhar"
+                        android:textSize="14dp"
+                        android:checked="true"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/textDarkPrimary"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="4dp"
+                        android:textAppearance="@android:style/TextAppearance.Material.Title"
+                        android:layout_height="wrap_content" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/button_scan_aadhar"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="false"
+                        android:gravity="center"
+                        android:onClick="scanAadhar"
+                        android:layout_gravity="center"
+                        android:fontFamily="sans-serif"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="9dp"
+                        android:textColor="@color/white"
+                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                        android:text="Scan Aadhar QRcode"/>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp">
+                        <EditText android:id="@+id/adhar_num"
+                            android:layout_width="match_parent"
+                            android:textSize="14dp"
+                            android:layout_marginBottom="6dp"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:hint="Aadhar Card No" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginBottom="4dp">
+                        <EditText android:id="@+id/no_aadhar_reason"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:textSize="14dp"
+                            android:inputType="textShortMessage"
+                            android:hint="Reason for not available" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:id="@+id/idproof_dropdown"
+                        android:layout_height="40dp"
+                        android:visibility="gone"
+                        android:entries="@array/id_proof_arrays"
+                        android:prompt="@string/prompt"
+                        android:textSize="14dp"
+                        android:spinnerMode="dropdown"
+                        android:popupBackground="@color/white"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp">
+                    </android.support.v7.widget.AppCompatSpinner>
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/id_proof_upload"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="false"
+                        android:visibility="gone"
+                        android:layout_gravity="center"
+                        android:onClick="onIDProof"
+                        android:fontFamily="sans-serif"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginTop="3dp"
+                        android:textColor="@color/white"
+                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                        android:text="Attachment"/>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="6dp">
+                        <EditText android:id="@+id/phone"
+                            android:layout_width="match_parent"
+                            android:textSize="14dp"
+                            android:visibility="gone"
+                            android:layout_height="wrap_content"
+                            android:inputType="phone"
+                            android:hint="Contact Number" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/gender_dropDown"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textSize="14dp"
+                        android:entries="@array/gender_arrays"
+                        android:prompt="@string/prompt"
+                        android:spinnerMode="dropdown"
+                        android:popupBackground="@color/white"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="7dp">
+                    </android.support.v7.widget.AppCompatSpinner>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/date_layout"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="4dp">
+                        <EditText android:id="@+id/dob_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:clickable="true"
+                            android:inputType="date"
+                            android:textSize="14dp"
+                            android:hint="Date of Birth(DD/MM/YYYY)" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/marital_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:visibility="gone"
+                        android:entries="@array/marital_arrays"
+                        android:prompt="@string/prompt"
+                        android:spinnerMode="dropdown"
+                        android:textSize="14dp"
+                        android:popupBackground="@color/white"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginBottom="9dp">
+                    </android.support.v7.widget.AppCompatSpinner>
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:visibility="gone"
+                        android:id="@+id/religion_dropDown"
+                        android:entries="@array/religion_arrays"
+                        android:prompt="@string/prompt"
+                        android:spinnerMode="dropdown"
+                        android:textSize="14dp"
+                        android:popupBackground="@color/white"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="11dp">
+                    </android.support.v7.widget.AppCompatSpinner>
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:id="@+id/caste_dropDown"
+                        android:visibility="gone"
+                        android:entries="@array/caste_arrays"
+                        android:prompt="@string/prompt"
+                        android:spinnerMode="dropdown"
+                        android:textSize="14dp"
+                        android:popupBackground="@color/white"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="11dp">
+                    </android.support.v7.widget.AppCompatSpinner>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/address_info_title"
+                        android:layout_width="match_parent"
+                        android:text="Present Address and Contact Details"
+                        android:textSize="15dp"
+                        android:padding="2dp"
+                        android:visibility="gone"
+                        android:clickable="true"
+                        android:fontFamily="sans-serif"
+                        android:layout_marginTop="12dp"
+                        android:textAllCaps="true"
+                        android:textStyle="normal"
+                        android:textAppearance="@android:style/TextAppearance.Material.Title"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:layout_below="@+id/address_info_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:id="@+id/yearsOfStay"
+                            android:entries="@array/years_stay_arrays"
+                            android:prompt="@string/prompt"
+                            android:spinnerMode="dropdown"
+                            android:textSize="14dp"
+                            android:popupBackground="@color/white"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="6dp">
+                        </android.support.v7.widget.AppCompatSpinner>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp">
+                            <EditText android:id="@+id/present_address"
+                                android:layout_width="match_parent"
+                                android:textSize="14dp"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPostalAddress"
+                                android:hint="Present Address " />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp">
+                            <EditText android:id="@+id/city_present"
+                                android:layout_width="match_parent"
+                                android:textSize="14dp"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPostalAddress"
+                                android:hint="City " />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/slum_name_layout"
+                            android:layout_marginBottom="5dp">
+                            <EditText android:id="@+id/slum_name_edit"
+                                android:layout_width="match_parent"
+                                android:textSize="14dp"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPostalAddress"
+                                android:hint="Name of the slum " />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp">
+                            <EditText android:id="@+id/phone_present"
+                                android:layout_width="match_parent"
+                                android:textSize="14dp"
+                                android:layout_height="wrap_content"
+                                android:inputType="phone"
+                                android:hint="Mobile No" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/permanent_info_title"
+                            android:layout_width="match_parent"
+                            android:text="Permanent Address"
+                            android:textSize="15dp"
+                            android:padding="2dp"
+                            android:clickable="true"
+                            android:fontFamily="sans-serif"
+                            android:layout_marginTop="10dp"
+                            android:textAllCaps="true"
+                            android:textStyle="normal"
+                            android:textAppearance="@android:style/TextAppearance.Material.Title"
+                            android:layout_height="wrap_content" />
+
+                        <android.support.v7.widget.AppCompatCheckBox
+                            android:layout_width="wrap_content"
+                            android:text="Check if same as Present Address"
+                            android:id="@+id/same_address_chkbox"
+                            android:layout_marginTop="10dp"
+                            android:textSize="14dp"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/textDarkPrimary"
+                            android:layout_marginBottom="3dp"
+                            android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                            android:layout_height="wrap_content" />
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/addrs_layout"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp">
+                            <EditText android:id="@+id/permanent_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="14dp"
+                                android:inputType="textPostalAddress"
+                                android:hint="Permanent Address " />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/city_layout"
+                            android:layout_marginBottom="5dp">
+                            <EditText android:id="@+id/city_parmanent"
+                                android:layout_width="match_parent"
+                                android:textSize="14dp"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPostalAddress"
+                                android:hint="City/Village " />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="3dp">
+                            <EditText android:id="@+id/phone2"
+                                android:layout_width="match_parent"
+                                android:textSize="14dp"
+                                android:layout_marginBottom="3dp"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPostalAddress"
+                                android:hint="District, State" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/family_info_title"
+                        android:layout_width="match_parent"
+                        android:text="Family Details"
+                        android:textSize="15dp"
+                        android:visibility="gone"
+                        android:padding="2dp"
+                        android:clickable="true"
+                        android:fontFamily="sans-serif"
+                        android:layout_marginTop="12dp"
+                        android:textAllCaps="true"
+                        android:textStyle="normal"
+                        android:textAppearance="@android:style/TextAppearance.Material.Title"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_below="@+id/family_info_title"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:visibility="gone"
+                            android:layout_marginBottom="5dp">
+                            <EditText android:id="@+id/family_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="14dp"
+                                android:visibility="gone"
+                                android:inputType="textPersonName"
+                                android:hint="Name" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:visibility="gone"
+                            android:id="@+id/family_gender"
+                            android:entries="@array/gender_arrays"
+                            android:prompt="@string/prompt"
+                            android:spinnerMode="dropdown"
+                            android:popupBackground="@color/white"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="7dp">
+                        </android.support.v7.widget.AppCompatSpinner>
+
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:id="@+id/family_relation"
+                            android:entries="@array/relation_arrays"
+                            android:prompt="@string/prompt"
+                            android:spinnerMode="dropdown"
+                            android:visibility="gone"
+                            android:popupBackground="@color/white"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="7dp">
+                        </android.support.v7.widget.AppCompatSpinner>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp">
+                            <EditText android:id="@+id/relation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="14dp"
+                                android:inputType="textPersonName"
+                                android:hint="Relationship to the Head of the Family" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:visibility="gone"
+                            android:layout_marginBottom="5dp">
+                            <EditText android:id="@+id/age"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="14dp"
+                                android:visibility="gone"
+                                android:inputType="numberDecimal"
+                                android:hint="Age in Years " />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:visibility="gone"
+                            android:layout_marginBottom="5dp">
+                            <EditText android:id="@+id/id_no"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:inputType="textPostalAddress"
+                                android:textSize="14dp"
+                                android:hint="ID Card No. " />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.v7.widget.AppCompatButton
+                            android:id="@+id/add_more_family"
+                            android:layout_width="180dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="1dp"
+                            android:onClick="addMore"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
+                            android:textAllCaps="false"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/white"
+                            android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                            android:padding="15dp"
+                            android:text="  Add More  "/>
+
+                        <android.support.v7.widget.AppCompatCheckBox
+                            android:layout_width="wrap_content"
+                            android:text="Other House/Residential Land anywhere in India"
+                            android:id="@+id/other_land_chkbox"
+                            android:layout_marginTop="10dp"
+                            android:textSize="14dp"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/textDarkPrimary"
+                            android:layout_marginBottom="3dp"
+                            android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                            android:layout_height="wrap_content" />
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/loc_layout"
+                            android:layout_marginBottom="5dp">
+                            <EditText android:id="@+id/other_house"
+                                android:layout_width="match_parent"
+                                android:textSize="14dp"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPostalAddress"
+                                android:hint="Location details " />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:id="@+id/land_size_layout"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="3dp">
+                            <EditText android:id="@+id/land_size"
+                                android:layout_width="match_parent"
+                                android:textSize="14dp"
+                                android:layout_marginBottom="3dp"
+                                android:layout_height="wrap_content"
+                                android:inputType="numberDecimal"
+                                android:hint="Extent of Land in Sq. M:" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.v7.widget.AppCompatButton
+                            android:id="@+id/other_house_proof"
+                            android:layout_width="180dp"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:visibility="gone"
+                            android:onClick="otherHouseAttach"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:fontFamily="sans-serif"
+                            android:layout_marginBottom="0dp"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/white"
+                            android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                            android:text=" Attachment "/>
+                    </LinearLayout>
+
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="0dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/eligibility"
+                        android:id="@+id/eligibility"
+                        android:textAllCaps="false"
+                        android:textSize="15dp"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="normal"
+                        android:textColor="@color/textDarkPrimary"
+                        android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/non_elig"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="6dp">
+                        <EditText android:id="@+id/reason_non_eligible"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:inputType="text|textAutoCorrect|textLongMessage"
+                            android:hint="Reason for Non Eligibility" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/biometirc_info_title"
+                        android:layout_width="match_parent"
+                        android:text="Biometric Information"
+                        android:textSize="15dp"
+                        android:paddingLeft="0dp"
+                        android:clickable="true"
+                        android:layout_marginTop="10dp"
+                        android:textAllCaps="true"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="normal"
+                        android:textAppearance="@android:style/TextAppearance.Material.Title"
+                        android:layout_height="wrap_content" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/thumb_impressiion"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_gravity="center"
+                        android:onClick="scanFingerprint"
+                        android:textAllCaps="false"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/white"
+                        android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                        android:padding="15dp"
+                        android:text="Thumb Impression"/>
+                </LinearLayout>
+            </RelativeLayout>
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/submit"
+                android:layout_below="@+id/rel_ll"
+                android:layout_alignParentBottom="true"
+                android:layout_width="155dp"
+                android:layout_height="wrap_content"
+                android:onClick="onSaveClicked"
+                android:fontFamily="sans-serif"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="20dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                android:padding="15dp"
+                android:text="Save"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/cancel"
+                android:layout_below="@+id/rel_ll"
+                android:layout_toLeftOf="@+id/submit"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_width="157dp"
+                android:onClick="onSubmitClicked"
+                android:fontFamily="sans-serif"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="20dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                android:padding="15dp"
+                android:text="Submit"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/sub_continue"
+                android:layout_below="@+id/rel_ll"
+                android:layout_width="157dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                android:layout_toLeftOf="@+id/submit"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="20dp"
+                android:layout_alignParentBottom="true"
+                android:onClick="onContinueClicked"
+                android:fontFamily="sans-serif"
+                android:layout_centerHorizontal="true"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                android:padding="15dp"
+                android:text="   Continue   "/>
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

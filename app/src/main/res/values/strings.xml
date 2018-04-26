@@ -1,0 +1,356 @@
+<resources>
+    <string name="app_name">PMAY Housing For All</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Logout</string>
+    <string name="action_action_about">Sync Records</string>
+    <string name="action_action_new_survey">New Survey</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_pwd">Forgot Password</string>
+    <string name="survey">Survey</string>
+    <string name="txt_slum">Slum</string>
+    <string name="txt_non_slum">Non Slum</string>
+    <string name="eligibility">Eligibility for the scheme</string>
+    <string name="prompt">Select ID Proof</string>
+    <string name="confirm_title">Confirmation</string>
+
+    <string name="msg_scanner_not_connected">Please connect finger print device with the phone</string>
+    <string name="msg_scanner_finger_error">Please place your finger correctly</string>
+    <string name="msg_scanner_ready">Please place your finger on the tip of scanner</string>
+    <string name="msg_finger_success">Successfully captured your finger print</string>
+    <string name="msg_scanner_initialising">Please wait.. connecting finger print device with the phone</string>
+
+    <string name="confirm_attachment">Select Attachment</string>
+    <string name="confirm_message">You have successfully created an account. Once Admin will approve, password will be sent to your registered Mobile No/Email ID.</string>
+
+    <string name="register_fail_message">Failed to create your account. Please try again</string>
+    <string name="logout_message">Are you sure you want to logout from PMAY application?</string>
+    <string name="save_message_success">Survey data has been saved successfully</string>
+    <string name="save_message_fail">Fail to save the Survey data. Please try again</string>
+    <string name="submit_message_success">Survey data has been submitted succesfully</string>
+    <string name="submit_message_fail">Failed to submit the Survey data. Please try again</string>
+    <string name="save_message_offline">Survey data is saved locally</string>
+    <string name="save_message_no_network">Survey data is saved locally</string>
+    <string name="submit_message_verify">Please make sure the information provided by you are valid and attachments are validated before submitting the survey data. \n\nDo you want to verify the documents later?</string>
+
+    <string name="offline_save_option">Internet connection is mandatory for submit data. Please make sure to save the data as offline using Save button.</string>
+    <string name="survey_id_display">Please save the survey ID for future reference.</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="submit_non_slum_message">Is validation pending?</string>
+    <string name="submit_slum_message">Are you sure to submit the form now?</string>
+
+    <string-array name="years_stay_arrays">
+        <item>Years of Stay</item>
+        <item>0 to 1 Year</item>
+        <item>1 to 3 Years</item>
+        <item>3 to 5 Years</item>
+        <item>Above 5 Years</item>
+    </string-array>
+    <string-array name="ownership_arrays">
+        <item>Ownership Status</item>
+        <item>Own</item>
+        <item>Rent</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="house_arrays_roof">
+        <item>House based on Roof Type</item>
+        <item>Pucca/Cement concrete</item>
+        <item>semi-Pucca/CGI sheet</item>
+        <item>Katcha/Thached/Tarpaulin</item>
+        <item>Semi-Kutcha/CGI/Plank walling/Leirang taba</item>
+    </string-array>
+
+    <string-array name="house_arrays_wall">
+        <item>House based on Wall Type</item>
+        <item>Pucca/Brick Wall</item>
+        <item>semi-Pucca/Half Brick/Full Ecra Wall</item>
+        <item>Katcha/Phaklong/Plastic/Tarpaulin</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="employment_arrays">
+        <item>Employment Status</item>
+        <item>Self Employed</item>
+        <item>Salaried</item>
+        <item>Regular Wage</item>
+        <item>Labour</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="house_req_arrays">
+        <item>Housing Requirement</item>
+        <item>New House</item>
+        <item>Enhancement</item>
+    </string-array>
+
+    <string-array name="bank_names">
+        <item>Bank Name</item>
+        <item>Allahabad Bank</item>
+        <item>Karur Vysya Bank</item>
+        <item>Andhra Bank</item>
+        <item>Kotak Bank</item>
+        <item>Axis Bank</item>
+        <item>Laxmi Vilas Bank</item>
+        <item>Bank of Baroda</item>
+        <item>Odisha State</item>
+        <item>Cooperative Bank</item>
+        <item>Bank of India</item>
+        <item>Oriental Bank of Commerce</item>
+        <item>Bank of Maharashtra</item>
+        <item>Punjab and Sind Bank</item>
+        <item>Canara Bank</item>
+        <item>Punjab National Bank</item>
+        <item>Central Bank of India</item>
+        <item>Shamrao Vitthal Co-operative Bank</item>
+        <item>City Union Bank</item>
+        <item>South Indian Bank</item>
+        <item>Corporation Bank</item>
+        <item>State Bank of Bikaner and Jaipur</item>
+        <item>Deutsche Bank</item>
+        <item>State Bank of Hyderabad</item>
+        <item>Development Credit Bank</item>
+        <item>State Bank of India</item>
+        <item>Dhanlaxmi Bank</item>
+        <item>State Bank of Mysore</item>
+        <item>Federal Bank</item>
+        <item>State Bank of Patiala</item>
+        <item>HDFC Bank</item>
+        <item>State Bank of Travancore</item>
+        <item>HDFC BANK LTD</item>
+        <item>Syndicate Bank</item>
+        <item>ICICI Bank</item>
+        <item>Tamilnad Mercantile Bank Ltd</item>
+        <item>IDBI Bank</item>
+        <item>UCO Bank</item>
+        <item>Indian Bank</item>
+        <item>Union Bank of India</item>
+        <item>Indian Overseas Bank</item>
+        <item>nited Bank of India</item>
+        <item>IndusInd Bank</item>
+        <item>Utkal Grameen Bank</item>
+        <item>ING Vysya Bank</item>
+        <item>Vijaya Bank</item>
+        <item>Jammu and Kashmir Bank</item>
+        <item>Yes Bank Ltd</item>
+        <item>Karnataka Bank Ltd</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="ulb_names_array">
+        <item>ULB Name</item>
+        <item>Anandapur(M)</item>
+        <item>Attabira(N)</item>
+        <item>Baliguda(N)</item>
+        <item>Balugaon(N)</item>
+        <item>Banpur(N)</item>
+        <item>Barapalli(N)</item>
+        <item>Barbil(M)</item>
+        <item>Bargarh(M)</item>
+        <item>Bhawanipatana(M)</item>
+        <item>Bhubaneswar(MC)</item>
+        <item>Binika(N)</item>
+        <item>Bolangir(M)</item>
+        <item>Boudhgarh(N)</item>
+        <item>Champua(N)</item>
+        <item>Chandabali(N)</item>
+        <item>Daspalla(N)</item>
+        <item>Deogarh(N)</item>
+        <item>Dhamnagar(N)</item>
+        <item>Dharmagarh(N)</item>
+        <item>G.Udayagiri(N)</item>
+        <item>Jatni(M)</item>
+        <item>Joda(M)</item>
+        <item>Junagarh(N)</item>
+        <item>Kantabanjhi(N)</item>
+        <item>Keonjhargarh(M)</item>
+        <item>Kesinga(N)</item>
+        <item>Khandapada(N)</item>
+        <item>Khurda(M)</item>
+        <item>Konark(N)</item>
+        <item>Kuchinda(N)</item>
+        <item>Nayagarh(N)</item>
+        <item>Nimapara(N)</item>
+        <item>Padmapur(N)</item>
+        <item>Patnagarh(N)</item>
+        <item>Phulbani(M)</item>
+        <item>Pipili(N)</item>
+        <item>Puri(M)</item>
+        <item>Ranpur(N)</item>
+        <item>Redhakhol(N)</item>
+        <item>Sambalpur(MC)</item>
+        <item>Sonepur(M)</item>
+        <item>Tarva(N)</item>
+        <item>Titlagarh(N)</item>
+        <item>Tusura(N)</item>
+    </string-array>
+
+    <string-array name="id_proof_arrays">
+        <item>Any Other ID Proof</item>
+        <item>Aadhar</item>
+        <item>Voter ID</item>
+        <item>BPL Card</item>
+        <item>Bank Passbook</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="gender_arrays">
+        <item>Sex</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Transgender</item>
+    </string-array>
+
+    <string-array name="relation_arrays">
+        <item>Relationship</item>
+        <item>Father</item>
+        <item>Mother</item>
+        <item>Spouse</item>
+        <item>Brother</item>
+        <item>Sister</item>
+        <item>Son</item>
+        <item>Daughter</item>
+        <item>GrandSon</item>
+        <item>GrandDaughter</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="mission_arrays">
+        <item>Preferred component of Mission</item>
+        <item>Credit Linked Subsidy Scheme</item>
+        <item>Affordable Housing In Partnership</item>
+        <item>Beneficiary LED Construction</item>
+    </string-array>
+
+    <string-array name="vehicle_arrays">
+        <item>Vehicle Type</item>
+        <item>2 Wheeler</item>
+        <item>3 Wheeler</item>
+        <item>4 Wheeler</item>
+        <item>LCV/Heavy(Mini truck/truck/tractor/bus)</item>
+    </string-array>
+
+    <string-array name="marital_arrays">
+        <item>Marital Status</item>
+        <item>Single</item>
+        <item>Married</item>
+        <item>Widow</item>
+        <item>Widower</item>
+        <item>Divorcee</item>
+    </string-array>
+    <string-array name="caste_arrays">
+        <item>Caste</item>
+        <item>General</item>
+        <item>SC</item>
+        <item>ST</item>
+        <item>OBC</item>
+    </string-array>
+    <string-array name="religion_arrays">
+        <item>Religion</item>
+        <item>Hindu</item>
+        <item>Muslim</item>
+        <item>Christian</item>
+        <item>Sikh</item>
+        <item>Jainism</item>
+        <item>Buddhism</item>
+        <item>Zoroastrianism</item>
+        <item>Others</item>
+    </string-array>
+    <string name="creatw_new_acc">Create New Account</string>
+    <string name="create_new_acc">Don\'t have an account ?\nCreate New Account</string>
+    <string name="heading_scheme_title">Welcome to Pradhan Mantri Awas Yojana \nHousing For All</string>
+    <string name="heading_scheme_title2">Welcome to Pradhan Mantri Awas Yojana \nHousing For All</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="large_text">
+        "Material is the metaphor.\n\n"
+
+        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
+        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
+        "technologically advanced and open to imagination and magic.\n"
+        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
+        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
+        "flexibility of the material creates new affordances that supercede those in the physical "
+        "world, without breaking the rules of physics.\n"
+        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
+        "interact, and exist in space and in relation to each other. Realistic lighting shows "
+        "seams, divides space, and indicates moving parts.\n\n"
+
+        "Bold, graphic, intentional.\n\n"
+
+        "The foundational elements of print based design typography, grids, space, scale, color, "
+        "and use of imagery guide visual treatments. These elements do far more than please the "
+        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
+        "imagery, large scale typography, and intentional white space create a bold and graphic "
+        "interface that immerse the user in the experience.\n"
+        "An emphasis on user actions makes core functionality immediately apparent and provides "
+        "waypoints for the user.\n\n"
+
+        "Motion provides meaning.\n\n"
+
+        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
+        "inflection points that initiate motion, transforming the whole design.\n"
+        "All action takes place in a single environment. Objects are presented to the user without "
+        "breaking the continuity of experience even as they transform and reorganize.\n"
+        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
+        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
+
+        "3D world.\n\n"
+
+        "The material environment is a 3D space, which means all objects have x, y, and z "
+        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
+        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
+        "position along the z-axis and has a standard 1dp thickness.\n"
+        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
+        "emulated by manipulating the y-axis.\n\n"
+
+        "Light and shadow.\n\n"
+
+        "Within the material environment, virtual lights illuminate the scene. Key lights create "
+        "directional shadows, while ambient light creates soft shadows from all angles.\n"
+        "Shadows in the material environment are cast by these two light sources. In Android "
+        "development, shadows occur when light sources are blocked by sheets of material at "
+        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
+        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
+
+        "Resting elevation.\n\n"
+
+        "All material objects, regardless of size, have a resting elevation, or default elevation "
+        "that does not change. If an object changes elevation, it should return to its resting "
+        "elevation as soon as possible.\n\n"
+
+        "Component elevations.\n\n"
+
+        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
+        "does not vary from 6dp in one app to 16dp in another app).\n"
+        "Components may have different resting elevations across platforms, depending on the depth "
+        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
+
+        "Responsive elevation and dynamic elevation offsets.\n\n"
+
+        "Some component types have responsive elevation, meaning they change elevation in response "
+        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
+        "changes are consistently implemented using dynamic elevation offsets.\n"
+        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
+        "to the component’s resting state. They ensure that elevation changes are consistent "
+        "across actions and component types. For example, all components that lift on press have "
+        "the same elevation change relative to their resting elevation.\n"
+        "Once the input event is completed or cancelled, the component will return to its resting "
+        "elevation.\n\n"
+
+        "Avoiding elevation interference.\n\n"
+
+        "Components with responsive elevations may encounter other components as they move between "
+        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
+        "through other material, components avoid interfering with one another any number of ways, "
+        "whether on a per component basis or using the entire app layout.\n"
+        "On a component level, components can move or be removed before they cause interference. "
+        "For example, a floating action button (FAB) can disappear or move off screen before a "
+        "user picks up a card, or it can move if a snackbar appears.\n"
+        "On the layout level, design your app layout to minimize opportunities for interference. "
+        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
+        "when a user tries to pick up one of cards.\n\n"
+    </string>
+    <string name="title_activity_pmayhome_sceen">PMAYHomeSceenActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+</resources>

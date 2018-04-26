@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:visibility="visible"
+        android:id="@+id/app_bar"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/blue"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    </android.support.design.widget.AppBarLayout>
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:id="@+id/capture_layout"
+       android:layout_below="@+id/app_bar"
+       android:orientation="vertical"
+       android:paddingBottom="2dp"
+       android:paddingLeft="@dimen/activity_horizontal_margin"
+       android:paddingRight="@dimen/activity_horizontal_margin"
+       android:paddingTop="@dimen/activity_vertical_margin"
+       android:layout_height="match_parent">
+
+       <TextView
+           android:id="@+id/heading"
+           android:layout_below="@+id/pmay_icon"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginBottom="0dp"
+           android:layout_marginTop="5dp"
+           android:gravity="center"
+           android:text="@string/heading_scheme_title2"
+           android:fontFamily="sans-serif-light"
+           android:textColor="@color/blue"
+           android:textStyle="bold"
+           android:textSize="16dp"
+           android:textAppearance="@android:style/TextAppearance.Material.Headline" />
+
+       <ImageView
+           android:src="@drawable/pmay_logo"
+           android:layout_width="wrap_content"
+           android:padding="5dp"
+           android:visibility="gone"
+           android:layout_height="wrap_content"
+           android:layout_marginBottom="1dp"
+           android:gravity="center"
+           android:layout_gravity="center" />
+       <Button
+           android:layout_width="match_parent"
+           android:id="@+id/button"
+           android:visibility="gone"
+           android:layout_height="match_parent" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:layout_below="@+id/button"
+        android:background="@color/blue"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:visibility="invisible"
+        android:layout_gravity="center"
+        android:soundEffectsEnabled="false"
+        android:gravity="center"
+        android:fontFamily="sans-serif"
+        android:textAppearance="@android:style/TextAppearance.Material.Body1"
+        android:layout_marginBottom="0dp"
+        android:enabled="true"
+        android:text="  Scan FingerPrint  "/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_marginTop="2dp"
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_below="@+id/button2"
+        android:background="@color/blue"
+        android:padding="0dp"
+        app:srcCompat="@android:color/background_light"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_alignStart="@+id/button2"
+        android:layout_below="@+id/button2"
+        android:enabled="true"
+        android:text="CAPTURE (BG)"/>
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_alignStart="@+id/button2"
+        android:layout_below="@+id/button3"
+        android:enabled="true"
+        android:text="MATCH CAPTURE"/>
+
+    <TextView
+        android:id="@+id/textMessage"
+        android:layout_below="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="2dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:maxLines="2"
+        android:text="Status Message"/>
+   </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="100dp"
+        android:orientation="horizontal">
+        <!-- Signup Button -->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="0dp"
+            android:fontFamily="sans-serif"
+            android:textAllCaps="false"
+            android:padding="12dp"
+            android:text="Save"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_retry"
+            android:layout_width="0dp"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"
+            android:layout_marginLeft="0dp"
+            android:textAllCaps="false"
+            android:padding="12dp"
+            android:text="Retry"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:onClick="cancelClick"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"
+            android:layout_marginLeft="0dp"
+            android:textAllCaps="false"
+            android:padding="12dp"
+            android:text="Cancel"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/awaas_logo"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:paddingTop="20dp"
+            android:layout_height="78dp"
+            android:layout_marginLeft="-52dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="left"
+            android:layout_gravity="left" />
+
+        <ImageView
+            android:src="@drawable/choice_logo"
+            android:paddingTop="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="70dp"
+            android:layout_marginRight="-57dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginBottom="-25dp"
+            android:gravity="right"
+            android:layout_gravity="right" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:text="Access Computech Pvt Ltd"
+        android:textColor="#1d265c"
+        android:textSize="25dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView4"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:text="Contact :- 9327208489 (for Tech assistance only)"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView3"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:autoLink="email"
+        android:text="ketan@acpl.ind.in"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone"
+        android:autoLink="web"
+        android:text="www.accesscomputech.com"
+        android:textStyle="bold"/>
+</RelativeLayout>

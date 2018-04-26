@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+
+        <ImageView
+            android:src="@drawable/pmay_logo"
+            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:layout_gravity="center" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/forgot_pwd"
+            android:layout_width="wrap_content"
+            android:text="@string/creatw_new_acc"
+            android:textSize="15dp"
+            android:textColor="@color/blue"
+            android:clickable="true"
+            android:textAllCaps="true"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textAppearance="@android:style/TextAppearance.Material.Headline"
+            android:layout_height="wrap_content" />
+
+        <!-- Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="6dp">
+            <EditText android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:visibility="gone"
+                android:inputType="textPersonName"
+                android:hint="ULB Name"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Password Re-enter Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="6dp">
+            <EditText android:id="@+id/input_reEnterPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textSize="14dp"
+                android:inputType="textPersonName|number"
+                android:hint="ULB No."/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="6dp">
+            <EditText android:id="@+id/input_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:inputType="number"
+                android:hint="Mobile Number" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Name Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="6dp">
+            <EditText android:id="@+id/input_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:inputType="textPersonName"
+                android:hint="First Name" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Last Name Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:visibility="visible"
+            android:layout_marginBottom="6dp">
+            <EditText android:id="@+id/input_middle_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:inputType="textPersonName"
+                android:hint="Middle Name" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Last Name Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:visibility="visible"
+            android:layout_marginBottom="6dp">
+            <EditText android:id="@+id/input_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:inputType="textPersonName"
+                android:hint="Last Name" />
+        </android.support.design.widget.TextInputLayout>
+
+
+
+        <!--  Email Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="6dp">
+            <EditText android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textSize="14dp"
+                android:hint="Email ID " />
+        </android.support.design.widget.TextInputLayout>
+        <!-- mobile number -->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="29dp"
+            android:orientation="horizontal">
+            <!-- Signup Button -->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_signup"
+            android:layout_width="0dp"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="0dp"
+            android:fontFamily="sans-serif"
+            android:textAllCaps="false"
+            android:padding="12dp"
+            android:text="Sign Up"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
+                android:layout_marginLeft="0dp"
+                android:textAllCaps="false"
+                android:padding="12dp"
+                android:text="Cancel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/awaas_logo"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:paddingTop="20dp"
+                android:layout_height="78dp"
+                android:layout_marginLeft="-52dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="left"
+                android:layout_gravity="left" />
+
+            <ImageView
+                android:src="@drawable/choice_logo"
+                android:paddingTop="10dp"
+                android:layout_marginTop="12dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="70dp"
+                android:layout_marginRight="-57dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginBottom="-25dp"
+                android:gravity="right"
+                android:layout_gravity="right" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
