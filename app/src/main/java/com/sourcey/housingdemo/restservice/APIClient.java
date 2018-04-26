@@ -28,7 +28,7 @@ public class APIClient {
 
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://choice-pmayodisha.org")
+                .baseUrl("https://choice-awaasodisha.org")//"https://choice-pmayodisha.org"
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
