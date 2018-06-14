@@ -44,7 +44,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="14dp"
                 android:inputType="textEmailAddress"
-                android:text="9710701900"
                 android:hint="Mobile/Email" />
         </android.support.design.widget.TextInputLayout>
 
@@ -88,7 +87,6 @@
                 android:layout_marginTop="0dp"
                 android:paddingBottom="20dp"
                 android:inputType="textPassword"
-                android:text="RU@236sa"
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
 
