@@ -29,8 +29,9 @@
     <string name="save_message_fail">Fail to save the Survey data. Please try again</string>
     <string name="submit_message_success">Survey data has been submitted succesfully</string>
     <string name="submit_message_fail">Failed to submit the Survey data. Please try again</string>
-    <string name="save_message_offline">Survey data is saved locally</string>
-    <string name="save_message_no_network">Survey data is saved locally</string>
+    <string name="save_message_offline">You are offline, survey data is saved locally</string>
+    <string name="save_message_low_network">Low network bandwidth, survey data is saved locally</string>
+    <string name="you_are_offline_please_check_your_internet_connection">"You are offline, Please check your internet connection."</string>
     <string name="submit_message_verify">Please make sure the information provided by you are valid and attachments are validated before submitting the survey data. \n\nDo you want to verify the documents later?</string>
 
     <string name="offline_save_option">Internet connection is mandatory for submit data. Please make sure to save the data as offline using Save button.</string>
@@ -353,4 +354,6 @@
     </string>
     <string name="title_activity_pmayhome_sceen">PMAYHomeSceenActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="low_nw_bandwidth_docs_might_not_upload">"Network bandwidth is low, document might not upload."</string>
+    <string name="please_check_your_internet_connection">"Please check your internet connection."</string>
 </resources>

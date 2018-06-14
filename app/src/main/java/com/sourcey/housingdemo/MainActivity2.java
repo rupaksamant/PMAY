@@ -33,6 +33,7 @@ import com.sourcey.housingdemo.restservice.APIClient;
 import com.sourcey.housingdemo.restservice.APIInterface;
 import com.sourcey.housingdemo.restservice.AddSurveyRequest;
 import com.sourcey.housingdemo.restservice.AddSurveyResponse;
+import com.sourcey.housingdemo.utils.CommonUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -448,7 +449,7 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     boolean isWiFiDATAConnected() {
-        final ConnectivityManager connMgr = (ConnectivityManager)
+        /*final ConnectivityManager connMgr = (ConnectivityManager)
                 this.getSystemService(Context.CONNECTIVITY_SERVICE);
         TelephonyManager telMgr = (TelephonyManager)
                 this.getSystemService(Context.TELEPHONY_SERVICE);
@@ -457,6 +458,9 @@ public class MainActivity2 extends AppCompatActivity {
         final android.net.NetworkInfo mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         if ((wifi != null && wifi.isConnected()) || (mobile != null && mobile.isConnected() && telMgr.getNetworkType() != TelephonyManager.NETWORK_TYPE_EDGE)) {
             return  true;
+        }*/
+        if(CommonUtils.isNetworkAvailable(this) && !CommonUtils.is2GNetwork(this)) {
+            return true;
         }
         return false;
     }
@@ -860,17 +864,23 @@ public class MainActivity2 extends AppCompatActivity {
             return;
         }
 
+        String msg = getResources().getString(R.string.save_message_offline);
+        if(CommonUtils.is2GNetwork(this)) {
+            msg = getResources().getString(R.string.save_message_low_network);
+        }
         if(!adhar_no.isEmpty()) {
-            alertDialog.setMessage(getResources().getString(R.string.save_message_offline)+" with Aadhar Number <" + adhar_no + ">.");
+//            alertDialog.setMessage(getResources().getString(R.string.save_message_offline)+" with Aadhar Number <" + adhar_no + ">.");
+            msg += " with Aadhar Number <" + adhar_no + ">.";
             /*if(isOffline) {
                 alertDialog.setMessage(getResources().getString(R.string.save_message_no_network)+" with Aadhar Number <" + adhar_no + ">");
             }*/
         } else {
-            alertDialog.setMessage(R.string.save_message_offline);
+//            alertDialog.setMessage(R.string.save_message_offline);
            /* if(isOffline) {
                 alertDialog.setMessage(R.string.save_message_no_network);
             }*/
         }
+        alertDialog.setMessage(msg);
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 

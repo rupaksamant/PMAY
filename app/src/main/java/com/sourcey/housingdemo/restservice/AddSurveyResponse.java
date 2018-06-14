@@ -18,5 +18,8 @@ public class AddSurveyResponse {
     @SerializedName("exception")
     public String exception;
 
+    @SerializedName("message")
+    public String message;
+
 
 }

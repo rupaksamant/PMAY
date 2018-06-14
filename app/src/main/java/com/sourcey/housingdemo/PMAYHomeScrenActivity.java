@@ -39,14 +39,12 @@ import com.sourcey.housingdemo.restservice.APIClient;
 import com.sourcey.housingdemo.restservice.APIInterface;
 import com.sourcey.housingdemo.restservice.AddSurveyRequest;
 import com.sourcey.housingdemo.restservice.AddSurveyResponse;
-import com.sourcey.housingdemo.restservice.Credential;
-import com.sourcey.housingdemo.restservice.RetrofitSurveyDataResponse;
 import com.sourcey.housingdemo.restservice.SurveyDataResponse;
+import com.sourcey.housingdemo.utils.CommonUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -425,9 +423,11 @@ public class PMAYHomeScrenActivity extends AppCompatActivity {
     void uploadOfflineRecords() {
         Log.v("PMAY", " uploadOfflineRecords() - Enter " );
         if(!isWiFiDATAConnected()) {
-            Toast.makeText(this, "Please check your internet connections", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, getResources().getString(R.string.please_check_your_internet_connection), Toast.LENGTH_LONG).show();
+            showToastForNetworkConnection();
             return ;
         }
+
         List recordsList = AddSurveyDataManager.getInstance().surveyDataModals;
         if(updatedList == null) {
             updatedList = new ArrayList();
@@ -918,7 +918,7 @@ public class PMAYHomeScrenActivity extends AppCompatActivity {
     }
 
     boolean isWiFiDATAConnected() {
-        Log.v("PMAY", "Menu  : isWiFiDATAConnected enter ");
+        /*Log.v("PMAY", "Menu  : isWiFiDATAConnected enter ");
         final ConnectivityManager connMgr = (ConnectivityManager)
                 this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -927,8 +927,8 @@ public class PMAYHomeScrenActivity extends AppCompatActivity {
         Log.v("PMAY", "Menu  : isWiFiDATAConnected enter , telMgr "+ telMgr);
         final android.net.NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         final android.net.NetworkInfo mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        Log.v("PMAY", " isWiFiDATAConnected()  "+telMgr.getNetworkType()  );
-        if ((wifi != null && wifi.isConnected()) || (mobile != null && mobile.isConnected() && telMgr.getNetworkType() != TelephonyManager.NETWORK_TYPE_EDGE)) {
+        Log.v("PMAY", " isWiFiDATAConnected()  "+telMgr.getNetworkType()  );*/
+        if ((CommonUtils.isNetworkAvailable(this) && !CommonUtils.is2GNetwork(this))) {
             return  true;
         }
         return false;
@@ -966,7 +966,8 @@ public class PMAYHomeScrenActivity extends AppCompatActivity {
         }
           else if (item.getItemId() == R.id.action_sync) {
             if(!isWiFiDATAConnected()) {
-                Toast.makeText(this, "Please check your internet connections.", Toast.LENGTH_LONG).show();
+                showToastForNetworkConnection();
+//                Toast.makeText(this, getResources().getString(R.string.you_are_offline_please_check_your_internet_connection), Toast.LENGTH_LONG).show();
                 return  true;
             }
             if(searchView != null) {
@@ -977,7 +978,7 @@ public class PMAYHomeScrenActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.action_upload_offline) {
             Log.v("PMAY", "Menu  : action_upload_offline enter ");
             if(!isWiFiDATAConnected()) {
-                Toast.makeText(this, "Please check your internet connections before trying to upload offline Survey data.", Toast.LENGTH_LONG).show();
+                showToastForNetworkConnection();
                 return  true;
             }
             Log.v("PMAY", "Menu  : action_upload_offline enter  - show dialog");
@@ -1011,5 +1012,15 @@ public class PMAYHomeScrenActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showToastForNetworkConnection() {
+        if(!CommonUtils.isNetworkAvailable(this)) {
+            Toast.makeText(this, getResources().getString(R.string.you_are_offline_please_check_your_internet_connection), Toast.LENGTH_LONG).show();
+        } else if(CommonUtils.is2GNetwork(this)){
+            Toast.makeText(this, getResources().getString(R.string.low_nw_bandwidth_docs_might_not_upload), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.please_check_your_internet_connection), Toast.LENGTH_LONG).show();
+        }
     }
 }

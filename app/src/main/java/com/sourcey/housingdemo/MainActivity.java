@@ -9,9 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.icu.text.AlphabeticIndex;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,9 +27,9 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.text.InputFilter;
 //import android.util.Log;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,10 +43,8 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.google.zxing.client.android.Intents;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.journeyapps.barcodescanner.CaptureActivity;
 import com.pm.yojana.housingdemo.R;
 import com.sourcey.housingdemo.modal.PmayDatabaseHelper;
 import com.sourcey.housingdemo.modal.SurveyDataModal;
@@ -56,30 +52,23 @@ import com.sourcey.housingdemo.restservice.APIClient;
 import com.sourcey.housingdemo.restservice.APIInterface;
 import com.sourcey.housingdemo.restservice.AddSurveyRequest;
 import com.sourcey.housingdemo.restservice.AddSurveyResponse;
-import com.sourcey.housingdemo.restservice.Credential;
+import com.sourcey.housingdemo.utils.CommonUtils;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -1432,18 +1421,22 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if(!adhar_no.isEmpty()) {
-            alertDialog.setMessage(getResources().getString(R.string.save_message_offline)+" with Aadhar Number <" + adhar_no + ">.");
-            if(isOffline) {
-                alertDialog.setMessage(getResources().getString(R.string.save_message_no_network)+" with Aadhar Number <" + adhar_no + ">.");
-            }
-        } else {
-            alertDialog.setMessage(R.string.save_message_offline);
-            if(isOffline) {
-                alertDialog.setMessage(R.string.save_message_no_network);
-            }
+        String msg = getResources().getString(R.string.save_message_offline);
+        if(CommonUtils.is2GNetwork(this)) {
+            msg = getResources().getString(R.string.save_message_low_network);
         }
-
+        if(!adhar_no.isEmpty()) {
+            msg += " with Aadhar Number <" + adhar_no + ">.";
+//            if(isOffline) {
+//                alertDialog.setMessage(getResources().getString(R.string.save_message_no_network)+" with Aadhar Number <" + adhar_no + ">" + " due to low bandwidth.");
+//            }
+        } else {
+//            alertDialog.setMessage(getResources().getString(R.string.save_message_offline));
+//            if(isOffline) {
+//                alertDialog.setMessage(getResources().getString(R.string.save_message_no_network));
+//            }
+        }
+        alertDialog.setMessage(msg);
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -1463,7 +1456,7 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    void displayUploadResponseDialog( boolean isSubmitted, final boolean isSuccess, String surveyID) {
+    void displayUploadResponseDialog(boolean isSubmitted, final boolean isSuccess, String surveyID, String message) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this,
                 R.style.AppTheme_Dark_Dialog);
@@ -1478,7 +1471,7 @@ public class MainActivity extends AppCompatActivity {
                 //alertDialog.setMessage(R.string.submit_message_success);
             }
             else {
-                alertDialog.setMessage(R.string.submit_message_fail);
+                alertDialog.setMessage(TextUtils.isEmpty(message) ? getResources().getString(R.string.submit_message_fail) : message) ;
                 alertDialog.setTitle("Error");            }
         } else {
             if(isSuccess) {
@@ -1558,7 +1551,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     boolean isWiFiDATAConnected() {
-        final ConnectivityManager connMgr = (ConnectivityManager)
+        /*final ConnectivityManager connMgr = (ConnectivityManager)
                 this.getSystemService(Context.CONNECTIVITY_SERVICE);
         TelephonyManager telMgr = (TelephonyManager)
                 this.getSystemService(Context.TELEPHONY_SERVICE);
@@ -1568,6 +1561,9 @@ public class MainActivity extends AppCompatActivity {
         //Log.v("PMAY", " isWiFiDATAConnected()  "+mobile.getType());
         if ((wifi != null && wifi.isConnected()) || (mobile != null && mobile.isConnected() && telMgr.getNetworkType() != TelephonyManager.NETWORK_TYPE_EDGE)) {
            return  true;
+        }*/
+        if(CommonUtils.isNetworkAvailable(this) && !CommonUtils.is2GNetwork(this)) {
+            return true;
         }
         return false;
     }
@@ -1892,7 +1888,7 @@ public class MainActivity extends AppCompatActivity {
                         resetAllFields();
                     }
 
-                    displayUploadResponseDialog(isSubmitted, response.body().success, response.body().surveyId);
+                    displayUploadResponseDialog(isSubmitted, response.body().success, response.body().surveyId, response.body().message);
                 } else {
                     //displayUploadResponseDialog(isSubmitted, false);
                     try {
@@ -1900,7 +1896,7 @@ public class MainActivity extends AppCompatActivity {
                         str = str.trim();*/
                         Log.v("PMAY", " onFailureResp - 3rd screen "+"Duplicate".contains(response.errorBody().string().toString()));
                         if(response != null && response.errorBody() != null && ("Duplicate".contains(response.errorBody().string().toString()))) {
-                            displayUploadResponseDialog(false, false, "");
+                            displayUploadResponseDialog(false, false, "", response.body().message);
                               return;
                         }
 
@@ -1909,10 +1905,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if(!isSubmitted) {
                         //showSaveDialogForOfflineRecords(false);
-                        displayUploadResponseDialog(false, false, "");
+                        displayUploadResponseDialog(false, false, "", response.body().message);
                         return;
                     } else {
-                        displayUploadResponseDialog(false, false, "");
+                        displayUploadResponseDialog(false, false, "", response.body().message);
                         return;
                     }
                 }
