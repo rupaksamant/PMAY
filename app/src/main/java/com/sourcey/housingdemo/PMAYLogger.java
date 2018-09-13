@@ -15,6 +15,7 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class PMAYLogger {
@@ -111,6 +112,9 @@ public class PMAYLogger {
 	}
 
 	public void writeLog(String tag, String log) {
+		if(TextUtils.isEmpty(tag) || TextUtils.isEmpty(log)) {
+			return;
+		}
 		Log.d(tag, log);
 		if (mPrintWriter == null) {
 			createLog();

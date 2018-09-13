@@ -20,6 +20,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Base64;
 
 import android.view.Menu;
@@ -41,9 +42,11 @@ import com.sourcey.housingdemo.restservice.AddSurveyRequest;
 import com.sourcey.housingdemo.restservice.AddSurveyResponse;
 import com.sourcey.housingdemo.restservice.SurveyDataResponse;
 import com.sourcey.housingdemo.utils.CommonUtils;
+import com.sourcey.housingdemo.utils.Constants;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -584,7 +587,7 @@ public class PMAYHomeScrenActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<AddSurveyResponse> call, Response<AddSurveyResponse> response) {
-                Log.d("PMAY"," onResponse : ");
+                Log.d("PMAY"," onResponse : " + response);
                 if(response != null && response.body() != null) {
                     if(response.body().success) {
                         updatedSurveyDataToDB(response.body().surveyId, req);
@@ -607,16 +610,27 @@ public class PMAYHomeScrenActivity extends AppCompatActivity {
                     } else {
                         if( mProgressDialog != null) {
                             mProgressDialog.dismiss();
-                            //Toast.makeText(PMAYHomeScrenActivity.this, "Failed to uploade offline records", Toast.LENGTH_LONG).show();
-                            Log.d("PMAY"," onResponse - Not success : ");
+                        }
+                        Log.d("PMAY"," onResponse - Not success : "+response.body().message);
+                        if(Constants.STATUS_DUPLICATE_ADHAR_NUMBER.equals(response.body().status)) {
                             showDuplicateAadharDialog(req);
+                        } else {
+                            Toast.makeText(PMAYHomeScrenActivity.this,
+                                    TextUtils.isEmpty(response.body().message) ? "Failed to upload offline records" : response.body().message,
+                                    Toast.LENGTH_LONG).show();
                         }
                     }
                 } else {
                     if( mProgressDialog != null) {
                         mProgressDialog.dismiss();
-                       // Toast.makeText(PMAYHomeScrenActivity.this, "Failed to uploade offline records", Toast.LENGTH_LONG).show();
+                    }
+                    if(response != null && response.body() != null && Constants.STATUS_DUPLICATE_ADHAR_NUMBER.equals(response.body().status)) {
                         showDuplicateAadharDialog(req);
+                    } else {
+                        String msg = response != null && response.body() != null ? response.body().message : "";
+                        Toast.makeText(PMAYHomeScrenActivity.this,
+                                TextUtils.isEmpty(msg) ? "Failed to upload offline records" : msg,
+                                Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -626,11 +640,15 @@ public class PMAYHomeScrenActivity extends AppCompatActivity {
                 Log.d("PMAY"," onFailure() ");
                /* if( mProgressDialog != null) {
                     mProgressDialog.dismiss();               }*/
-                    if( mProgressDialog != null) {
-                        mProgressDialog.dismiss();
-                       // Toast.makeText(PMAYHomeScrenActivity.this, "Failed to uploade offline records", Toast.LENGTH_LONG).show();
-                        showDuplicateAadharDialog(req);
-
+                if( mProgressDialog != null) {
+                    mProgressDialog.dismiss();
+//                        Toast.makeText(PMAYHomeScrenActivity.this, "Failed to uploade offline records", Toast.LENGTH_LONG).show();
+//                        showDuplicateAadharDialog(req);
+                }
+                if(SocketTimeoutException.class == t.getClass()) {
+                    Toast.makeText(getApplicationContext(), "Request timeout. Please try again later.", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Unable to upload offline records. Please try again.", Toast.LENGTH_LONG).show();
                 }
             }
         });

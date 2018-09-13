@@ -28,7 +28,6 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
-//import android.util.Log;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,6 +60,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -72,6 +72,8 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+//import android.util.Log;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -1612,6 +1614,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "Present house photo is required for survey data.", Toast.LENGTH_SHORT).show();
                 return;
             }*/
+        } else if(reason_non_eligible != null && reason_non_eligible.getVisibility() == View.VISIBLE
+                && reason_non_eligible.getText().length() < 8) {
+            Toast.makeText(getApplicationContext(), "Please enter valid reason for non-eligibility before saving survey data.", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         mProgressDialog = new ProgressDialog(this,
@@ -1800,6 +1806,13 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
                 return;
+            } else if(reason_non_eligible != null && reason_non_eligible.getVisibility() == View.VISIBLE
+                    && reason_non_eligible.getText().length() < 8) {
+                if(mProgressDialog != null) {
+                    mProgressDialog.dismiss();
+                }
+                Toast.makeText(getApplicationContext(), "Please enter valid reason for non-eligibility before saving survey data.", Toast.LENGTH_SHORT).show();
+                return;
             }
 
             if(!isSubmitted) {
@@ -1903,12 +1916,16 @@ public class MainActivity extends AppCompatActivity {
                     }catch (Exception e) {
 
                     }
+                    String msg = "";
+                    if(response != null && response.body() != null) {
+                        msg = response.body().message;
+                    }
                     if(!isSubmitted) {
                         //showSaveDialogForOfflineRecords(false);
-                        displayUploadResponseDialog(false, false, "", response.body().message);
+                        displayUploadResponseDialog(false, false, "", msg);
                         return;
                     } else {
-                        displayUploadResponseDialog(false, false, "", response.body().message);
+                        displayUploadResponseDialog(false, false, "", msg);
                         return;
                     }
                 }
@@ -1922,7 +1939,13 @@ public class MainActivity extends AppCompatActivity {
                 if(!isSubmitted) {
                     //showSaveDialogForOfflineRecords(false);
                     Toast.makeText(getApplicationContext(), "Unable to save. Please try again", Toast.LENGTH_LONG).show();
-                    return;
+//                    return;
+                } else {
+                    if(SocketTimeoutException.class == t.getClass()) {
+                        Toast.makeText(getApplicationContext(), "Request timeout. Please try again later.", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Unable to submit. Please try again.", Toast.LENGTH_LONG).show();
+                    }
                 }
 
             }
@@ -2643,6 +2666,10 @@ public class MainActivity extends AppCompatActivity {
             }
             Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
             return;
+        } else if(reason_non_eligible != null && reason_non_eligible.getVisibility() == View.VISIBLE
+                && reason_non_eligible.getText().length() < 8) {
+            Toast.makeText(getApplicationContext(), "Please enter valid reason for non-eligibility before saving survey data.", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         if(isWiFiDATAConnected()) {
@@ -2650,6 +2677,7 @@ public class MainActivity extends AppCompatActivity {
                     R.style.AppTheme_Dark_Dialog);
             mProgressDialog.setIndeterminate(true);
             mProgressDialog.setMessage("Submitting ...");
+            mProgressDialog.setCancelable(false);
             mProgressDialog.show();
             submitConfirmDialog();
         } else {

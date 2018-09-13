@@ -23,7 +23,7 @@ public class CommonUtils {
     public static String getNetworkType(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if(netInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+        if(netInfo != null && netInfo.getType() == ConnectivityManager.TYPE_WIFI) {
             return WIFI;
             /*try {
                 if(InetAddress.getByName("www.google.com").isReachable(10)){

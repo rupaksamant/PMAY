@@ -35,9 +35,9 @@ public class APIClient {
 
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://statsodisha.org") // Test server
+//                .baseUrl("https://statsodisha.org") // Test server
 //                .baseUrl("https://choice-pmayodisha.org") // Current Live server
-//                .baseUrl("https://choice-awaasodisha.org") // not sure of this
+                .baseUrl("https://choice-awaasodisha.org") // not sure of this
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)

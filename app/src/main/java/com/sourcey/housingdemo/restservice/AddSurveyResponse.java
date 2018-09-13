@@ -21,5 +21,7 @@ public class AddSurveyResponse {
     @SerializedName("message")
     public String message;
 
+    @SerializedName("code")
+    public String status;
 
 }

@@ -29,6 +29,7 @@ import com.sourcey.housingdemo.restservice.CreateNewAccount;
 import com.sourcey.housingdemo.restservice.Credential;
 import com.sourcey.housingdemo.restservice.ForgotPwdRequest;
 import com.sourcey.housingdemo.restservice.LoginResponse;
+import com.sourcey.housingdemo.utils.CommonUtils;
 
 import butterknife.ButterKnife;
 import butterknife.Bind;
@@ -123,11 +124,29 @@ public class LoginActivity extends AppCompatActivity {
         if(isRememberMeChecked) {
             String uname = defaultPref.getString("USER_NAME", "");
             String pwd = defaultPref.getString("PASSWORD", "");
-            if(!uname.isEmpty() && !pwd.isEmpty()) {
-                Credential cred = new Credential(uname, pwd);
-                sendLoginRequest(cred, true);
+            Credential cred = null;
+            if (!uname.isEmpty() && !pwd.isEmpty()) {
+                cred = new Credential(uname, pwd);
+            }
+            if(!CommonUtils.isNetworkAvailable(this)) {
+                Toast.makeText(this, getResources().getString(R.string.you_are_offline_please_check_your_internet_connection), Toast.LENGTH_LONG).show();
+                if(cred != null) {
+                    setUserIdAndPwdIfAutoLoginenabled(cred);
+                }
+                return;
+            } else {
+                if(cred != null) {
+                    sendLoginRequest(cred, true);
+                }
             }
         }
+
+    }
+
+    private void setUserIdAndPwdIfAutoLoginenabled(Credential cred) {
+        remember_chk.setChecked(true);
+        _emailText.setText(cred.userId);
+        _passwordText.setText(cred.password);
 
     }
 
@@ -384,6 +403,10 @@ public class LoginActivity extends AppCompatActivity {
     public void login() {
         Log.d(TAG, "Login");
 
+        if(!CommonUtils.isNetworkAvailable(this)) {
+            Toast.makeText(this, getResources().getString(R.string.you_are_offline_please_check_your_internet_connection), Toast.LENGTH_LONG).show();
+            return;
+        }
         if (!validate()) {
             onLoginFailed();
             return;
