@@ -3,6 +3,19 @@ package com.sourcey.housingdemo.restservice;
 import java.io.IOException;
 
 import okhttp3.Interceptor;
+import android.annotation.SuppressLint;
+
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.util.Objects;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import okhttp3.CertificatePinner;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -28,10 +41,11 @@ public class APIClient {
 
 
 
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
-                .addInterceptor(responseInterceptor())
-                .build();
+                .addInterceptor(responseInterceptor());
+
+        clientBuilder.sslSocketFactory(Objects.requireNonNull(getSSLSocketFactory()));
 
 
         retrofit = new Retrofit.Builder()
@@ -40,7 +54,7 @@ public class APIClient {
                 .baseUrl("https://choice-awaasodisha.org") // not sure of this
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
+                .client(clientBuilder.build())
                 .build();
         return retrofit;
     }
@@ -54,8 +68,40 @@ public class APIClient {
                 return response;
             }
         }
-        ;
+                ;
     }
 
+    private static SSLSocketFactory getSSLSocketFactory() {
+        try {
+            // Create a trust manager that does not validate certificate chains
+            final TrustManager[] trustAllCerts = new TrustManager[]{
+                    new X509TrustManager() {
+                        @SuppressLint("TrustAllX509TrustManager")
+                        @Override
+                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                        }
 
+                        @SuppressLint("TrustAllX509TrustManager")
+                        @Override
+                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                        }
+
+                        @Override
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                            return new java.security.cert.X509Certificate[]{};
+                        }
+                    }
+            };
+
+            // Install the all-trusting trust manager
+            final SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            // Create an ssl socket factory with our all-trusting manager
+
+            return sslContext.getSocketFactory();
+        } catch (KeyManagementException | NoSuchAlgorithmException e) {
+            return null;
+        }
+
+    }
 }
