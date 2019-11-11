@@ -1606,8 +1606,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         } else if((!"S".equals(addSurveyRequest.chckSlumRadio))) { //BISW27Mar18:
             if (addSurveyDataManager.missionSpinnerSaved == 0) { //BISW27Mar18: Need to check if misson component is selected or not
-                Toast.makeText(getBaseContext(), "Please enter Preferred component of mission before submitting Survey data.", Toast.LENGTH_SHORT).show();
-                return;
+                // not requireed to check mission component
+//                Toast.makeText(getBaseContext(), "Please enter Preferred component of mission before submitting Survey data.", Toast.LENGTH_SHORT).show();
+//                return;
             } /*else if (addSurveyDataManager.presentHousePhotoFile == null && addSurveyRequest.isNewRecord) {
                 if (mProgressDialog != null) {
                     mProgressDialog.dismiss();
@@ -1885,7 +1886,7 @@ public class MainActivity extends AppCompatActivity {
                  if(mProgressDialog != null) {
                      mProgressDialog.dismiss();
                  }
-                 if(!Constants.ENABLE_CHEAT_MODE) {
+                 if(!Constants.ENABLE_CHEAT_MODE && !"S".equalsIgnoreCase(addSurveyRequest.slumRadio)) {
                      Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
                      return;
                  }

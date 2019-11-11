@@ -527,7 +527,7 @@ public class MainActivity2 extends AppCompatActivity {
             }
             Toast.makeText(getBaseContext(), "Applicant photo  is required for submitting survey data", Toast.LENGTH_SHORT).show();
             return;
-        } else if(addSurveyRequest.isHousePicUploaded  == false) {
+        } else if(!addSurveyRequest.isHousePicUploaded) {
             if(mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
@@ -749,7 +749,7 @@ public class MainActivity2 extends AppCompatActivity {
             if(mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
-            if(!Constants.ENABLE_CHEAT_MODE) {
+            if(!Constants.ENABLE_CHEAT_MODE && isSubmitted) {
                 Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
                 return;
             }
