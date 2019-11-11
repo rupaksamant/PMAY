@@ -17,6 +17,8 @@ public class Constants {
     //HTTP Status Codes
     public static final String STATUS_DUPLICATE_ADHAR_NUMBER = "1001";
 
+    public static final boolean ENABLE_CHEAT_MODE = false;
+
     // RU@889sa
 //    android:text="8097524594"
 //    android:text="DE@222na"

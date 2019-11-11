@@ -52,6 +52,7 @@ import com.sourcey.housingdemo.restservice.APIInterface;
 import com.sourcey.housingdemo.restservice.AddSurveyRequest;
 import com.sourcey.housingdemo.restservice.AddSurveyResponse;
 import com.sourcey.housingdemo.utils.CommonUtils;
+import com.sourcey.housingdemo.utils.Constants;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -1482,7 +1483,7 @@ public class MainActivity extends AppCompatActivity {
                 //alertDialog.setMessage(R.string.save_message_success);
             }
             else {
-                alertDialog.setMessage("The Aadhar number given, already present in the records, please use a different Aadhar number for Survey.");
+                alertDialog.setMessage(TextUtils.isEmpty(message) ? getResources().getString(R.string.save_message_fail) : message) ;
                 alertDialog.setTitle("Error");
             }
         }
@@ -1509,7 +1510,7 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                addSurveyRequest.validationPendingStatus = "N";
+//                addSurveyRequest.validationPendingStatus = "N";
                 createUploadRequest(false);
                 if("S".equals(addSurveyRequest.chckSlumRadio)) {
                     addSurveyRequest.isSubmittedFlag = "Y";
@@ -1796,16 +1797,20 @@ public class MainActivity extends AppCompatActivity {
                     if (mProgressDialog != null) {
                         mProgressDialog.dismiss();
                     }
-                    Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
-                    return;
+                    if(!Constants.ENABLE_CHEAT_MODE) {
+                        Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
             } else if(addSurveyDataManager.biometricDetails == null && addSurveyRequest.isNewRecord) {
                 //addSurveyDataManager.biometricDetails = new byte[1];
                 if(mProgressDialog != null) {
                     mProgressDialog.dismiss();
                 }
-                Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
-                return;
+                if(!Constants.ENABLE_CHEAT_MODE) {
+                    Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             } else if(reason_non_eligible != null && reason_non_eligible.getVisibility() == View.VISIBLE
                     && reason_non_eligible.getText().length() < 8) {
                 if(mProgressDialog != null) {
@@ -1827,7 +1832,7 @@ public class MainActivity extends AppCompatActivity {
                 //offline submit
                 addSurveyRequest.isSubmitted = "OSB";
                 addSurveyRequest.isSubmittedFlag = "OSB";
-                addSurveyRequest.validationPendingStatus = "N";
+//                addSurveyRequest.validationPendingStatus = "N";
             }
             if(mProgressDialog != null) {
                 mProgressDialog.dismiss();
@@ -1848,16 +1853,24 @@ public class MainActivity extends AppCompatActivity {
                 addSurveyRequest.geoLongitude = addSurveyRequest.rationCardNo;
                 addSurveyRequest.rationCardNo = null;
             }
+            if(addSurveyRequest.geoLatitude != null && !"0".equalsIgnoreCase(addSurveyRequest.geoLatitude)) {
+                addSurveyRequest.bplNo = null;
+            }
+            if(addSurveyRequest.geoLongitude != null && !"0".equalsIgnoreCase(addSurveyRequest.geoLongitude)) {
+                addSurveyRequest.rationCardNo = null;
+            }
         } else {
             // new record
         }
         if(addSurveyRequest != null && "S".equals(addSurveyRequest.chckSlumRadio)) {
-            if(addSurveyDataManager.slumBiometricDetails == null && addSurveyRequest.isNewRecord) {
+            if(!Constants.ENABLE_CHEAT_MODE && addSurveyDataManager.slumBiometricDetails == null && addSurveyRequest.isNewRecord) {
                 if(mProgressDialog != null) {
                     mProgressDialog.dismiss();
                 }
-                Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
-                return;
+                if(!Constants.ENABLE_CHEAT_MODE) {
+                    Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
 
             if(addSurveyDataManager.slumBiometricDetails != null) {
@@ -1872,8 +1885,10 @@ public class MainActivity extends AppCompatActivity {
                  if(mProgressDialog != null) {
                      mProgressDialog.dismiss();
                  }
-                 Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
-                 return;
+                 if(!Constants.ENABLE_CHEAT_MODE) {
+                     Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
+                     return;
+                 }
              }
             if(addSurveyDataManager.biometricDetails != null) {
                 RequestBody description = RequestBody.create(MultipartBody.FORM, addSurveyDataManager.biometricDetails);
@@ -1907,10 +1922,12 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         /*String str = ;
                         str = str.trim();*/
-                        Log.v("PMAY", " onFailureResp - 3rd screen "+"Duplicate".contains(response.errorBody().string().toString()));
-                        if(response != null && response.errorBody() != null && ("Duplicate".contains(response.errorBody().string().toString()))) {
-                            displayUploadResponseDialog(false, false, "", response.body().message);
-                              return;
+                        if(response!= null && response.errorBody() != null) {
+                            Log.v("PMAY", " onFailureResp - 3rd screen " + "Duplicate".contains(response.errorBody().string().toString()));
+                            if (response.errorBody() != null && ("Duplicate".contains(response.errorBody().string().toString()))) {
+                                displayUploadResponseDialog(false, false, "", response.message());
+                                return;
+                            }
                         }
 
                     }catch (Exception e) {
@@ -2549,8 +2566,8 @@ public class MainActivity extends AppCompatActivity {
     public void checkGPSOption(){ //BISW27Mar18:
         // Get Location Manager and check for GPS & Network location services
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-                lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+        if(!Constants.ENABLE_CHEAT_MODE && (lm != null && !lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER))) {
             // Build the alert dialog
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this,
                     R.style.AppTheme_Dark_Dialog);
@@ -2664,8 +2681,10 @@ public class MainActivity extends AppCompatActivity {
             if(mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
-            Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
-            return;
+            if(!Constants.ENABLE_CHEAT_MODE) {
+                Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
+                return;
+            }
         } else if(reason_non_eligible != null && reason_non_eligible.getVisibility() == View.VISIBLE
                 && reason_non_eligible.getText().length() < 8) {
             Toast.makeText(getApplicationContext(), "Please enter valid reason for non-eligibility before saving survey data.", Toast.LENGTH_SHORT).show();

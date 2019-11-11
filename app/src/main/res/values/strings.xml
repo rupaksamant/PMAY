@@ -142,7 +142,7 @@
 
     <string-array name="ulb_names_array">
         <item>ULB Name</item>
-        <item>Anandapur(M)</item>
+        <!--<item>Anandapur(M)</item>
         <item>Attabira(N)</item>
         <item>Baliguda(N)</item>
         <item>Balugaon(N)</item>
@@ -150,9 +150,9 @@
         <item>Barapalli(N)</item>
         <item>Barbil(M)</item>
         <item>Bargarh(M)</item>
-        <item>Bhawanipatana(M)</item>
+        <item>Bhawanipatana(M)</item>-->
         <item>Bhubaneswar(MC)</item>
-        <item>Binika(N)</item>
+        <!--<item>Binika(N)</item>
         <item>Bolangir(M)</item>
         <item>Boudhgarh(N)</item>
         <item>Champua(N)</item>
@@ -185,7 +185,7 @@
         <item>Sonepur(M)</item>
         <item>Tarva(N)</item>
         <item>Titlagarh(N)</item>
-        <item>Tusura(N)</item>
+        <item>Tusura(N)</item>-->
     </string-array>
 
     <string-array name="id_proof_arrays">

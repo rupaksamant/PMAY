@@ -1,11 +1,9 @@
 package com.sourcey.housingdemo;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,8 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatSpinner;
-import android.telephony.TelephonyManager;
 //import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -34,16 +32,15 @@ import com.sourcey.housingdemo.restservice.APIInterface;
 import com.sourcey.housingdemo.restservice.AddSurveyRequest;
 import com.sourcey.housingdemo.restservice.AddSurveyResponse;
 import com.sourcey.housingdemo.utils.CommonUtils;
+import com.sourcey.housingdemo.utils.Constants;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -541,8 +538,10 @@ public class MainActivity2 extends AppCompatActivity {
             if(mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
-            Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
-            return;
+            if(!Constants.ENABLE_CHEAT_MODE) {
+                Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
         if(isWiFiDATAConnected()) {
             mProgressDialog = new ProgressDialog(this,
@@ -692,8 +691,10 @@ public class MainActivity2 extends AppCompatActivity {
                 if(mProgressDialog != null) {
                     mProgressDialog.dismiss();
                 }
-                Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
-                return;
+                if(!Constants.ENABLE_CHEAT_MODE) {
+                    Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
 
             if(!isSubmitted) {
@@ -709,7 +710,7 @@ public class MainActivity2 extends AppCompatActivity {
                 //offline submit
                 addSurveyRequest.isSubmitted = "OSB";
                 addSurveyRequest.isSubmittedFlag = "OSB";
-                addSurveyRequest.validationPendingStatus = "N";
+//                addSurveyRequest.validationPendingStatus = "N";
             } /*else {
                 Toast.makeText(this, "Please check your internet connections", Toast.LENGTH_LONG).show();
             }*/
@@ -730,6 +731,13 @@ public class MainActivity2 extends AppCompatActivity {
                 addSurveyRequest.geoLongitude = addSurveyRequest.rationCardNo;
                 addSurveyRequest.rationCardNo = null;
             }
+
+            if(addSurveyRequest.geoLatitude != null && !"0".equalsIgnoreCase(addSurveyRequest.geoLatitude)) {
+                addSurveyRequest.bplNo = null;
+            }
+            if(addSurveyRequest.geoLongitude != null && !"0".equalsIgnoreCase(addSurveyRequest.geoLongitude)) {
+                addSurveyRequest.rationCardNo = null;
+            }
         }
 
         //Call<ResponseBody> callUpload =  apiInterface.uploadSurveyData(description, applicantImage, addSurveyRequest);
@@ -741,8 +749,10 @@ public class MainActivity2 extends AppCompatActivity {
             if(mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
-            Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
-            return;
+            if(!Constants.ENABLE_CHEAT_MODE) {
+                Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
         /*if(addSurveyRequest.isHousePicUploaded == false) {
             if(mProgressDialog != null) {
@@ -758,13 +768,13 @@ public class MainActivity2 extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Applicant photo  is required for submitting survey data", Toast.LENGTH_SHORT).show();
             return;
         }
+
         if(addSurveyDataManager.biometricDetails != null) {
             RequestBody description = RequestBody.create(MultipartBody.FORM, addSurveyDataManager.biometricDetails);
             callUpload =  apiInterface.uploadMultiFilesSurveyData(description, attachments, addSurveyRequest);
         } else {
             callUpload =  apiInterface.uploadMultiFilesSurveyData(attachments, addSurveyRequest);
         }
-
         callUpload.enqueue(new Callback<AddSurveyResponse>() {
 
             @Override
@@ -783,16 +793,32 @@ public class MainActivity2 extends AppCompatActivity {
                         }
                         resetAll();
                     }
-                    displayUploadResponseDialog(isSubmitted, response.body().success, response.body().surveyId);
+                    displayUploadResponseDialog(isSubmitted, response.body().success, response.body().surveyId, response.body().message);
                 } else {
                     //displayUploadResponseDialog(isSubmitted, false);
                     Log.v("PMAY", " onFailureResp - 4th screen " +response);
+                    try {
+                        /*String str = ;
+                        str = str.trim();*/
+                        Log.v("PMAY", " onFailureResp - 3rd screen "+"Duplicate".contains(response.errorBody().string().toString()));
+                        if(response != null && response.errorBody() != null && ("Duplicate".contains(response.errorBody().string().toString()))) {
+                            displayUploadResponseDialog(false, false, "", response.body().message);
+                            return;
+                        }
+
+                    }catch (Exception e) {
+
+                    }
+                    String msg = "";
+                    if(response != null && response.body() != null) {
+                        msg = response.body().message;
+                    }
                     if(!isSubmitted) {
-                        //showSaveDialogForOfflineRecords(isSubmitted);
-                        displayUploadResponseDialog(false, false, "");
+                        //showSaveDialogForOfflineRecords(false);
+                        displayUploadResponseDialog(false, false, "", msg);
                         return;
                     } else {
-                        displayUploadResponseDialog(false, false, "");
+                        displayUploadResponseDialog(false, false, "", msg);
                         return;
                     }
                 }
@@ -803,7 +829,11 @@ public class MainActivity2 extends AppCompatActivity {
                 if( mProgressDialog != null) {
                     mProgressDialog.dismiss();
                 }
-                displayUploadResponseDialog(false, false, "");
+                String message = "";
+                if (t != null && t.getMessage().isEmpty() == false) {
+                    message = t.getMessage();
+                }
+                displayUploadResponseDialog(false, false, "", message);
                 return;
             }
         });
@@ -1055,7 +1085,7 @@ public class MainActivity2 extends AppCompatActivity {
         return ret;
     }
 
-    void displayUploadResponseDialog( boolean isSubmitted,final boolean isSuccess, String surveyID) {
+    void displayUploadResponseDialog(boolean isSubmitted, final boolean isSuccess, String surveyID, String message) {
         if(addSurveyRequest.isHousePicUploaded) {
             house_uploaded_chk.setChecked(true);
         } else {
@@ -1074,7 +1104,7 @@ public class MainActivity2 extends AppCompatActivity {
             }
             //alertDialog.setMessage(R.string.submit_message_success);
             else {
-                alertDialog.setMessage(R.string.submit_message_fail);
+                alertDialog.setMessage(TextUtils.isEmpty(message) ? getResources().getString(R.string.submit_message_fail) : message);
                 alertDialog.setTitle("Error");            }
         } else {
             if(isSuccess)
@@ -1084,7 +1114,7 @@ public class MainActivity2 extends AppCompatActivity {
                 //alertDialog.setMessage(R.string.save_message_success);
             }
             else {
-                alertDialog.setMessage("The Aadhar number given, already present in the records, please use a different Aadhar number for Survey.");
+                alertDialog.setMessage(TextUtils.isEmpty(message) ? getResources().getString(R.string.save_message_fail) : message) ;
                 alertDialog.setTitle("Error");
             }
         }
@@ -1112,7 +1142,7 @@ public class MainActivity2 extends AppCompatActivity {
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                addSurveyRequest.validationPendingStatus = "Y";
+//                addSurveyRequest.validationPendingStatus = "Y";
                 addSurveyRequest.isSubmitted = "N";
                 createUploadRequest(false);
             }
@@ -1130,7 +1160,7 @@ public class MainActivity2 extends AppCompatActivity {
         alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                addSurveyRequest.validationPendingStatus = "N";
+//                addSurveyRequest.validationPendingStatus = "N";
                 addSurveyRequest.isSubmitted = "Y";
                 createUploadRequest(true);
             }
