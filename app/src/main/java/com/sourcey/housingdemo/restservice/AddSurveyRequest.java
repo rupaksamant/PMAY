@@ -306,4 +306,5 @@ public class AddSurveyRequest {
 
     public  boolean isNewRecord = true;
     public  boolean isHousePicUploaded;
+    public  boolean isFingerPrintUploaded;
 }

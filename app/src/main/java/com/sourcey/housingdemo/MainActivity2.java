@@ -533,7 +533,9 @@ public class MainActivity2 extends AppCompatActivity {
             }
             Toast.makeText(getBaseContext(), "Present house photo is required for submitting survey data", Toast.LENGTH_SHORT).show();
             return;
-        } else if(addSurveyDataManager.biometricDetails  == null && addSurveyRequest.isNewRecord) {
+        } else if(addSurveyDataManager.biometricDetails  == null
+                && !addSurveyRequest.isFingerPrintUploaded
+                && (addSurveyRequest.isNewRecord || "N".equalsIgnoreCase(addSurveyRequest.isSubmitted))) {
             //addSurveyDataManager.biometricDetails = new byte[1];
             if(mProgressDialog != null) {
                 mProgressDialog.dismiss();
@@ -542,6 +544,10 @@ public class MainActivity2 extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
                 return;
             }
+        } else if(reason_non_eligible != null && reason_non_eligible.getVisibility() == View.VISIBLE
+                && reason_non_eligible.getText().length() < 8) {
+            Toast.makeText(getApplicationContext(), "Please enter valid reason for non-eligibility before saving survey data.", Toast.LENGTH_SHORT).show();
+            return;
         }
         if(isWiFiDATAConnected()) {
             mProgressDialog = new ProgressDialog(this,
@@ -608,6 +614,7 @@ public class MainActivity2 extends AppCompatActivity {
             attachments.add(applicantImage);
         }
         if( addSurveyDataManager.signaturePhotoFile != null) {
+            addSurveyRequest.isFingerPrintUploaded = true;
             MultipartBody.Part applicantImage = addSurveyDataManager.getMultiPartFile(addSurveyDataManager.signaturePhotoFile, AddSurveyDataManager.SIGNATURE_PHTO);
             attachments.add(applicantImage);
         }
@@ -1036,6 +1043,7 @@ public class MainActivity2 extends AppCompatActivity {
             AddSurveyDataManager.getInstance().storeOfflineImage(this, AddSurveyDataManager.getInstance().mBitmapHousePicOffline, record.mAdharNo, AddSurveyDataManager.PRESENT_HOUSE_PHTO);
         }
         if(AddSurveyDataManager.getInstance().mBitmapFingerPrintOffline != null) {
+            addSurveyRequest.isFingerPrintUploaded = true;
             AddSurveyDataManager.getInstance().storeOfflineImage(this, AddSurveyDataManager.getInstance().mBitmapFingerPrintOffline, record.mAdharNo, AddSurveyDataManager.SIGNATURE_PHTO);
         }
 

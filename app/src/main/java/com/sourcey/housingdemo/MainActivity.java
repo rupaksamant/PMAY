@@ -1886,7 +1886,7 @@ public class MainActivity extends AppCompatActivity {
                  if(mProgressDialog != null) {
                      mProgressDialog.dismiss();
                  }
-                 if(!Constants.ENABLE_CHEAT_MODE && !"S".equalsIgnoreCase(addSurveyRequest.slumRadio)) {
+                 if(!Constants.ENABLE_CHEAT_MODE && "S".equalsIgnoreCase(addSurveyRequest.chckSlumRadio)) {
                      Toast.makeText(getBaseContext(), "Biometric Thumb impression is required for saving or submitting survey data", Toast.LENGTH_SHORT).show();
                      return;
                  }

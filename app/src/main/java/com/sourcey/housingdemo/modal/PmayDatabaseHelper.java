@@ -24,7 +24,7 @@ public class PmayDatabaseHelper extends SQLiteOpenHelper {
     // Database Version
     // old DB oversion is 1 and new version is 2 still
     //old DB oversion is 2 and new version is 3 still
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     // Database Name
     private static final String DATABASE_NAME = "PmaySurveyRecords.db";
@@ -55,6 +55,7 @@ public class PmayDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ulbNameId = "ulbNameId";
     private static final String COLUMN_religion = "religion";
     private static final String COLUMN_IS_HOUSE_PIC_UPLOADED = "isHousePicUploaded";
+    private static final String COLUMN_IS_FINGER_PRINT_UPLOADED = "isFingerPrintUploaded";
     private static final String COLUMN_religionIfOther = "religionIfOther";
     private static final String COLUMN_caste = "caste";
     private static final String COLUMN_presentTown = "presentTown";
@@ -107,6 +108,9 @@ public class PmayDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_ALTER_TABLE_1 = "ALTER TABLE "
             + TABLE_USER + " ADD COLUMN " + COLUMN_IS_HOUSE_PIC_UPLOADED + " INTEGER";
 
+    private static final String DATABASE_ALTER_TABLE_2 = "ALTER TABLE "
+            + TABLE_USER + " ADD COLUMN " + COLUMN_IS_FINGER_PRINT_UPLOADED + " INTEGER";
+
     // create table sql query
     private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
             + COLUMN_APPLICANT_NAME + " TEXT,"
@@ -125,6 +129,7 @@ public class PmayDatabaseHelper extends SQLiteOpenHelper {
             +  COLUMN_idNo + " TEXT,"
             +  COLUMN_dob + " TEXT,"
             +  COLUMN_IS_HOUSE_PIC_UPLOADED + " INTEGER, "
+            +  COLUMN_IS_FINGER_PRINT_UPLOADED + " INTEGER, "
             +  COLUMN_ulbNameId + " COLUMN_ulbNameId,"
             +  COLUMN_religion + " TEXT,"
             +  COLUMN_religionIfOther + " TEXT,"
@@ -206,7 +211,16 @@ public class PmayDatabaseHelper extends SQLiteOpenHelper {
                 db.execSQL(DATABASE_ALTER_TABLE_1);
                 Log.v("PMAY- DB", " onUpgrade : DATABASE_ALTER_TABLE_1 - Exit  ");
             } catch (Exception e) {
-                Log.v("PMAY- DB", " onUpgrade : Exception  -   "+e.getMessage());
+                Log.v("PMAY- DB", " onUpgrade : Exception  -  1 "+e.getMessage());
+            }
+        }
+        if (oldVersion <= 3) {
+            try {
+                Log.v("PMAY- DB", " onUpgrade : DATABASE_ALTER_TABLE_2 - enter  ");
+                db.execSQL(DATABASE_ALTER_TABLE_2);
+                Log.v("PMAY- DB", " onUpgrade : DATABASE_ALTER_TABLE_2 - Exit  ");
+            } catch (Exception e) {
+                Log.v("PMAY- DB", " onUpgrade : Exception  - 2  "+e.getMessage());
             }
         }
         //Drop User Table if exist
@@ -430,6 +444,7 @@ public class PmayDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_idNo,
                 COLUMN_dob,
                 COLUMN_IS_HOUSE_PIC_UPLOADED,
+                COLUMN_IS_FINGER_PRINT_UPLOADED,
                 COLUMN_ulbNameId,
                 COLUMN_religion,
                 COLUMN_religionIfOther,
@@ -529,11 +544,9 @@ public class PmayDatabaseHelper extends SQLiteOpenHelper {
                 user.genderId = cursor.getString(cursor.getColumnIndex(COLUMN_genderId));
                 user.dob = cursor.getString(cursor.getColumnIndex(COLUMN_dob));
                 int state = cursor.getInt(cursor.getColumnIndex(COLUMN_IS_HOUSE_PIC_UPLOADED));
-                if(state ==1) {
-                    user.isHousePicUploaded = true;
-                } else {
-                    user.isHousePicUploaded = false;
-                }
+                user.isHousePicUploaded = state == 1;
+                int bioState = cursor.getInt(cursor.getColumnIndex(COLUMN_IS_FINGER_PRINT_UPLOADED));
+                user.isFingerPrintUploaded = bioState == 1;
                 user.ulbNameId = cursor.getString(cursor.getColumnIndex(COLUMN_ulbNameId));
                 user.maritalStatus = cursor.getString(cursor.getColumnIndex(COLUMN_maritalStatus));
                 user.religion = cursor.getString(cursor.getColumnIndex(COLUMN_religion));
@@ -634,7 +647,11 @@ public class PmayDatabaseHelper extends SQLiteOpenHelper {
             } else {
                 values.put(COLUMN_IS_HOUSE_PIC_UPLOADED, 0);
             }
-
+            if(user.isFingerPrintUploaded) {
+                values.put(COLUMN_IS_FINGER_PRINT_UPLOADED, 1);
+            } else {
+                values.put(COLUMN_IS_FINGER_PRINT_UPLOADED, 0);
+            }
         }
         values.put(COLUMN_SURVEY_ID, user.surveyId);
         values.put(COLUMN_ACC_NO, user.bankAccNo);
